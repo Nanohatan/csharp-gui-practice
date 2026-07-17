@@ -8,9 +8,9 @@ on:
     branches:
       - main
 
-job:
+jobs:
   build:
-    run-on: macos-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout
@@ -19,7 +19,7 @@ job:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "10.0.301"
+          dotnet-version: "10.0.x"
 
       - name: Restore dependencies
         run: dotnet restore CounterApp/CounterApp.csproj
