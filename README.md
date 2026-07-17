@@ -7,6 +7,7 @@ mac でC# GUI アプリ作成練習
 vscodeにxamlのxamlライブビューイング拡張を入れたが、`command 'avalonia.showPreviewToSide`
 解決→https://github.com/AvaloniaUI/AvaloniaPro/issues/17、　vscode versionあげる。
 
+## ビルド・テスト
 
 
 
