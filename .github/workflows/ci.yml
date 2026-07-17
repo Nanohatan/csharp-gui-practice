@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+job:
+  build:
+    run-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.301"
+
+      - name: Restore dependencies
+        run: dotnet restore CounterApp/CounterApp.csproj
+
+      - name: Check formatting
+        run: dotnet format CounterApp/CounterApp.csproj --verify-no-changes --no-restore
+
+      - name: Build
+        run: >
+          dotnet build CounterApp/CounterApp.csproj
+          --configuration Release
+          --no-restore
+          --warnaserror
