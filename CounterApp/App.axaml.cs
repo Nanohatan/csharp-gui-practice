@@ -2,6 +2,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
+using CounterApp.Views;
+
 namespace CounterApp;
 
 public partial class App : Application

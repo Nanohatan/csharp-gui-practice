@@ -1,0 +1,29 @@
+<Window
+    x:Class="CounterApp.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:CounterApp.ViewModels"
+    x:DataType="vm:CounterViewModel"
+    Width="400"
+    Height="300">
+
+    <StackPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Spacing="16">
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="48"
+            Text="{Binding Count}" />
+
+        <Button
+            Content="+1"
+            Command="{Binding IncrementCommand}" />
+
+        <Button
+            Content="リセット"
+            Command="{Binding ResetCommand}" />
+
+    </StackPanel>
+</Window>
