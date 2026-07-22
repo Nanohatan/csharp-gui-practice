@@ -3,7 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="clr-namespace:CounterApp.ViewModels"
-    x:DataType="vm:CounterViewModel"
+    x:DataType="vm:MainWindowViewModel"
     Width="400"
     Height="300">
 
@@ -11,19 +11,14 @@
         HorizontalAlignment="Center"
         VerticalAlignment="Center"
         Spacing="16">
-
-        <TextBlock
+        <ContentControl Content="{Binding CurrentPage}" />
+        <Button
+            Content="商品表示"
             HorizontalAlignment="Center"
-            FontSize="48"
-            Text="{Binding Count}" />
+            Margin="0,16,0,8"
+            Command="{Binding ShowProductListCommand}"
+            />
 
-        <Button
-            Content="+1"
-            Command="{Binding IncrementCommand}" />
-
-        <Button
-            Content="リセット"
-            Command="{Binding ResetCommand}" />
 
     </StackPanel>
 </Window>

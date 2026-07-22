@@ -6,7 +6,7 @@ namespace CounterApp.ViewModels;
 public partial class MainWindowViewModel : ObservableObject
 {
     [ObservableProperty]
-    private ObservableObject? currentPage;
+    private ObservableObject? _currentPage;
 
     public MainWindowViewModel()
     {
