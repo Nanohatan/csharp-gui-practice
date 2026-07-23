@@ -7,13 +7,15 @@ mac でC# GUI アプリ作成練習
 
 ## やってみたいこと
 - format ローカルで自動で整える
+    - エディタ設定
+
 
 ## トラブルシューティング
 vscodeにxamlのxamlライブビューイング拡張を入れたが、`command 'avalonia.showPreviewToSide`
 解決→https://github.com/AvaloniaUI/AvaloniaPro/issues/17、　vscode versionあげる。
 
 ## ビルド・テスト
-- 依存ライブラリのインストール、ビルド、性的コードチェックを実装した。
+- 依存ライブラリのインストール、ビルド、静的コードチェックを実装した。
 - TODOテスト？もやるようにしたい。
 
 
