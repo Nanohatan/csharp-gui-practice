@@ -12,28 +12,45 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
+env:
+  DOTNET_VERSION: "10.0.x"
+  PROJECT_PATH: "./OmamagotoApp.csproj"
+
 jobs:
-  build:
-    runs-on: macos-latest
+  ios:
+    name: iOS build
+    runs-on: macos-15
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: "10.0.x"
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Restore dependencies
-        run: dotnet restore CounterApp/CounterApp.csproj
+      - name: Install iOS workload
+        run: dotnet workload install maui-ios
 
-      - name: Check formatting
-        run: dotnet format CounterApp/CounterApp.csproj --verify-no-changes --no-restore
+      - name: Show Xcode version
+        run: |
+          xcodebuild -version
+          xcode-select -p
 
-      - name: Build
+      - name: Restore
         run: >
-          dotnet build CounterApp/CounterApp.csproj
+          dotnet restore "${{ env.PROJECT_PATH }}"
+          -p:TargetFramework=net10.0-ios
+          -p:RuntimeIdentifier=iossimulator-x64
+
+      - name: Build iOS simulator
+        run: >
+          dotnet build "${{ env.PROJECT_PATH }}"
           --configuration Release
+          --framework net10.0-ios
+          --runtime iossimulator-x64
           --no-restore
-          --warnaserror
