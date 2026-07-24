@@ -13,7 +13,7 @@ MVP、ユーザーが価値を感じられる最小構成
     - 注文ボタンを押すと、注文完了画面が表示される。データ送信や決済処理は行わない。
 
 ## プロダクトバックログ
-1. 店員役のユーザーとして、商品を登録したい
+1. 店員役のユーザーとして、商品を登録できる
 1. 登録した商品を一覧で見れる
 1. ？
 
@@ -32,11 +32,11 @@ MVP、ユーザーが価値を感じられる最小構成
 - スプリントの振り返りを行い、うまく行ったこと、詰まったこと、自習に変えることを考える。
 
 
-
-
-
 ## 疑問
 - ファイル移動した後もビルドできた。どうやってパス参照してるんだ？
+- ワークロードとテンプレートの違い何？
+    - ワークロード：その種類のアプリを開発するために必要なツール一式
+    - テンプレート：プロジェクトのひな型
 
 ## やってみたいこと
 - format ローカルで自動で整える
@@ -48,6 +48,11 @@ MVP、ユーザーが価値を感じられる最小構成
     - 解決→https://github.com/AvaloniaUI/AvaloniaPro/issues/17、　vscode versionあげる。
 - プロジェクトをリセットしたから、ci.yml一旦動かしたくない
     - コミットメッセージに[skip ci] を入れる。
+- dotnet run でios選択後ビルドできない。
+    - xcodeのパス`xcode-select -p`が`/Applications/Xcode.app/Contents/Developer`になるように。
+    - https://developer.apple.com/documentation/xcode/configuring-command-line-tools-settings?changes=_8&utm_source=chatgpt.com
+- `dotnet run -f net10.0-android`
+    - android sdkを
 
 ## ビルド・テスト
 - 依存ライブラリのインストール、ビルド、静的コードチェックを実装した。
@@ -61,15 +66,26 @@ dotnet --version
 ```
 
 
-Avalonia のテンプレートをインストール
+MAUI のテンプレートをインストール
 ```
-dotnet new install Avalonia.Templates
+dotnet workload install maui
 ```
 
 プロジェクト作成
 ```
-dotnet new avalonia.app -o projectname
+dotnet new maui -n OmamagotoApp
 ```
+
+android sdk, java sdkの依存関係を導入
+```
+dotnet build \
+  -t:InstallAndroidDependencies \
+  -f net10.0-android \
+  -p:AndroidSdkDirectory="$HOME/Library/Android/sdk" \
+  -p:JavaSdkDirectory="$HOME/Library/Java/jdk" \
+  -p:AcceptAndroidSDKLicenses=True
+```
+
 
 実行
 ```
