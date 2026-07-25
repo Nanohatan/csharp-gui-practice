@@ -14,15 +14,15 @@
                 SemanticProperties.Description="dot net bot in a submarine number ten" />
 
             <Label
-                Text="Hello, World!"
+                Text="ごっこオーダー"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
 
             <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
+                Text="商品をつくって注文できる、おみせやさんごっこアプリ。"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                SemanticProperties.Description="商品をつくって注文できる、おみせやさんごっこアプリ。" />
 
             <Button
                 x:Name="CounterBtn"
@@ -30,6 +30,23 @@
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Fill" />
+            <Button
+                Text="✏️　商品をつくる"
+                FontSize="22"
+                FontAttributes="Bold"
+                HeightRequest="120"
+                CornerRadius="24"
+                BackgroundColor="#FFD166"
+                TextColor="#40362E" />
+
+            <Button
+                Text="🛒　注文をはじめる"
+                FontSize="22"
+                FontAttributes="Bold"
+                HeightRequest="120"
+                CornerRadius="24"
+                BackgroundColor="#73D2DE"
+                TextColor="#263238" />
         </VerticalStackLayout>
     </ScrollView>
 
