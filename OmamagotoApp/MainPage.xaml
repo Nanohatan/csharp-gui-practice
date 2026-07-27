@@ -37,7 +37,8 @@
                 HeightRequest="120"
                 CornerRadius="24"
                 BackgroundColor="#FFD166"
-                TextColor="#40362E" />
+                TextColor="#40362E"
+                Clicked="OnCreateProductClicked" />
 
             <Button
                 Text="🛒　注文をはじめる"

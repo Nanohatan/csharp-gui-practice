@@ -1,6 +1,7 @@
-﻿using OmamagotoApp.ViewModes;
+﻿using Microsoft.Extensions.Logging;
 
-using Microsoft.Extensions.Logging;
+using OmamagotoApp.Pages;
+using OmamagotoApp.ViewModels;
 
 namespace OmamagotoApp;
 
@@ -18,10 +19,12 @@ public static class MauiProgram
             });
 
         builder.Services.AddTransient<MainPage>();
+        builder.Services.AddTransient<ProductEditPage>();
         builder.Services.AddTransient<MainViewModel>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
         return builder.Build();
     }
+
 }

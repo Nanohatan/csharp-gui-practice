@@ -1,4 +1,5 @@
-﻿using OmamagotoApp.ViewModes;
+﻿using OmamagotoApp.Pages;
+using OmamagotoApp.ViewModels;
 
 namespace OmamagotoApp;
 
@@ -25,6 +26,11 @@ public partial class MainPage : ContentPage
 		else
 			CounterBtn.Text = $"Clicked {_count} times";
 		SemanticScreenReader.Announce(CounterBtn.Text);
+	}
+
+	private async void OnCreateProductClicked(object? sender, EventArgs e)
+	{
+		await Shell.Current.GoToAsync(nameof(ProductEditPage));
 	}
 
 }
