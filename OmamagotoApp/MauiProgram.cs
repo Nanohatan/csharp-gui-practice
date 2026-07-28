@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 
 using OmamagotoApp.Pages;
+using OmamagotoApp.Services.Dialogs;
 using OmamagotoApp.ViewModels;
 
 namespace OmamagotoApp;
@@ -17,6 +18,8 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
+
+        builder.Services.AddSingleton<IDialogService, DialogService>();
 
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<ProductEditPage>();

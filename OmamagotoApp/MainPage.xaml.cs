@@ -7,7 +7,7 @@ public partial class MainPage : ContentPage
 {
 	int _count = 0;
 
-	public MainPage() : this(new MainViewModel())
+	public MainPage()
 	{
 	}
 
