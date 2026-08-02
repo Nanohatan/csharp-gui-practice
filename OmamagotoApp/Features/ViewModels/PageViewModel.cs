@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 
 using OmamagotoApp.Services.Dialogs;
 
-namespace OmamagotoApp.ViewModels;
+namespace OmamagotoApp.Features.ViewModels;
 
 public partial class PageViewModel : ObservableObject
 {

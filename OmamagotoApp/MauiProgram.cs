@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 
-using OmamagotoApp.Pages;
 using OmamagotoApp.Services.Dialogs;
-using OmamagotoApp.ViewModels;
-using OmamagotoApp.Services.Dialogs;
+using OmamagotoApp.Features.Home;
+using OmamagotoApp.Features.ProductEdit;
 using OmamagotoApp.Services.Errors;
 namespace OmamagotoApp;
 
@@ -25,8 +24,11 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<IDialogService, DialogService>();
 
-        builder.Services.AddTransient<MainPage>();
-        builder.Services.AddTransient<ProductEditPage>();
+        builder.Services
+            .AddHomeFeature()
+            .AddProductEditFeature();
+
+
 
 #if DEBUG
         builder.Logging.AddDebug();

@@ -1,17 +1,16 @@
-﻿using OmamagotoApp.Pages;
-using OmamagotoApp.ViewModels;
+﻿using OmamagotoApp.Features.ProductEdit;
 
-namespace OmamagotoApp;
+namespace OmamagotoApp.Features.Home;
 
-public partial class MainPage : ContentPage
+public partial class HomePage : ContentPage
 {
 	int _count = 0;
 
-	public MainPage()
+	public HomePage()
 	{
 	}
 
-	public MainPage(MainViewModel viewModel)
+	public HomePage(HomeViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;

@@ -1,5 +1,5 @@
 
-namespace OmamagotoApp.Pages;
+namespace OmamagotoApp.Features.ProductEdit;
 
 public partial class ProductEditPage : ContentPage
 {
