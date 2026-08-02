@@ -5,6 +5,7 @@ using OmamagotoApp.Features.Home;
 using OmamagotoApp.Features.Products;
 using OmamagotoApp.Services.Errors;
 using OmamagotoApp.Services.Navigation;
+using OmamagotoApp.Services.Database;
 namespace OmamagotoApp;
 
 public static class MauiProgram
@@ -20,6 +21,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
         // 共通サービス
+        builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
         builder.Services.AddSingleton<IDialogService, DialogService>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<IErrorHandler, ErrorHandler>();

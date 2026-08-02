@@ -1,61 +1,28 @@
 using OmamagotoApp.Features.Products.Models;
 
-using SQLite;
+using OmamagotoApp.Services.Database;
 
 namespace OmamagotoApp.Features.Products.Services;
 
 public sealed class ProductService : IProductService
 {
-    private const string DatabaseFileName = "omamagotoApp.db3";
-    private readonly SemaphoreSlim _initializationLock = new(1, 1);
+    private readonly IDatabaseService _databaseService;
 
-    private SQLiteAsyncConnection? _database;
-
-    private static string DatabasePath =>
-        Path.Combine(
-            FileSystem.AppDataDirectory,
-            DatabaseFileName);
-    private async Task<SQLiteAsyncConnection> GetDatabaseAsync()
+    public ProductService(
+        IDatabaseService databaseService
+    )
     {
-        if (_database is not null)
-        {
-            return _database;
-        }
-
-        await _initializationLock.WaitAsync();
-
-        try
-        {
-            if (_database is not null)
-            {
-                return _database;
-            }
-            var connection = new SQLiteAsyncConnection(
-                DatabasePath,
-                SQLiteOpenFlags.ReadWrite
-                | SQLiteOpenFlags.Create
-                | SQLiteOpenFlags.SharedCache);
-
-            await connection.CreateTableAsync<Product>();
-            _database = connection;
-            return _database;
-        }
-        finally
-        {
-            _initializationLock.Release();
-        }
+        _databaseService = databaseService;
     }
-
     public async Task<int> AddAsync(Product product)
     {
-        ArgumentNullException.ThrowIfNull(product);
-        var db = await GetDatabaseAsync();
+        var db = await _databaseService.GetConnectionAsync();
+
         return await db.InsertAsync(product);
     }
-
     public async Task<IReadOnlyList<Product>> GetAllAsync()
     {
-        var db = await GetDatabaseAsync();
+        var db = await _databaseService.GetConnectionAsync();
 
         return await db.Table<Product>()
             .OrderByDescending(product => product.CreatedAt)
@@ -64,7 +31,7 @@ public sealed class ProductService : IProductService
 
     public async Task<Product?> GetByIdAsync(int id)
     {
-        var db = await GetDatabaseAsync();
+        var db = await _databaseService.GetConnectionAsync();
         return await db.Table<Product>()
             .Where(product => product.Id == id)
             .FirstOrDefaultAsync();
@@ -74,7 +41,7 @@ public sealed class ProductService : IProductService
     {
         ArgumentNullException.ThrowIfNull(product);
 
-        var db = await GetDatabaseAsync();
+        var db = await _databaseService.GetConnectionAsync();
 
         return await db.UpdateAsync(product);
     }
@@ -83,7 +50,7 @@ public sealed class ProductService : IProductService
     {
         ArgumentNullException.ThrowIfNull(product);
 
-        var db = await GetDatabaseAsync();
+        var db = await _databaseService.GetConnectionAsync();
         return await db.DeleteAsync(product);
     }
 }
