@@ -11,6 +11,8 @@ public static class ProductPageRegistration
         services.AddSingleton<IProductService, ProductService>();
         services.AddTransient<ProductEditPage>();
         services.AddTransient<ProductEditViewModel>();
+        services.AddTransient<ProductListPage>();
+        services.AddTransient<ProductListViewModel>();
         return services;
     }
 }

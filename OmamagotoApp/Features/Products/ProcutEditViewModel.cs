@@ -37,6 +37,11 @@ public partial class ProductEditViewModel : ObservableObject
         return !IsSaving;
     }
 
+    [RelayCommand]
+    private async Task GoToListAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(ProductListPage));
+    }
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task Save()
     {

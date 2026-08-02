@@ -38,6 +38,10 @@
             <Label
                 Text="{ Binding ResultMessage }"/>
 
+            <Button
+                Text="登録済み商品を見る"
+                Command="{Binding GoToListCommand}" />
+
         </VerticalStackLayout>
     </ScrollView>
 

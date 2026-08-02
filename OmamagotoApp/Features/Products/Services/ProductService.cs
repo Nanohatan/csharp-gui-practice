@@ -7,9 +7,9 @@ namespace OmamagotoApp.Features.Products.Services;
 public sealed class ProductService : IProductService
 {
     private const string DatabaseFileName = "omamagotoApp.db3";
-    private readonly SemaphoreSlim initializationLock = new(1, 1);
+    private readonly SemaphoreSlim _initializationLock = new(1, 1);
 
-    private SQLiteAsyncConnection? database;
+    private SQLiteAsyncConnection? _database;
 
     private static string DatabasePath =>
         Path.Combine(
@@ -17,18 +17,18 @@ public sealed class ProductService : IProductService
             DatabaseFileName);
     private async Task<SQLiteAsyncConnection> GetDatabaseAsync()
     {
-        if (database is not null)
+        if (_database is not null)
         {
-            return database;
+            return _database;
         }
 
-        await initializationLock.WaitAsync();
+        await _initializationLock.WaitAsync();
 
         try
         {
-            if (database is not null)
+            if (_database is not null)
             {
-                return database;
+                return _database;
             }
             var connection = new SQLiteAsyncConnection(
                 DatabasePath,
@@ -37,12 +37,12 @@ public sealed class ProductService : IProductService
                 | SQLiteOpenFlags.SharedCache);
 
             await connection.CreateTableAsync<Product>();
-            database = connection;
-            return database;
+            _database = connection;
+            return _database;
         }
         finally
         {
-            initializationLock.Release();
+            _initializationLock.Release();
         }
     }
 
