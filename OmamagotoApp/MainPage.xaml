@@ -14,12 +14,12 @@
                 SemanticProperties.Description="dot net bot in a submarine number ten" />
 
                     <Button
-        Text="情報ダイアログを表示"
-        Command="{Binding ShowTestDialogCommand}" />
+                        Text="情報ダイアログを表示"
+                        Command="{Binding ShowTestDialogCommand}" />
 
-    <Button
-        Text="確認ダイアログを表示"
-        Command="{Binding ConfirmTestCommand}" />
+                    <Button
+                        Text="確認ダイアログを表示"
+                        Command="{Binding ConfirmTestCommand}" />
 
 
             <Label
