@@ -1,45 +1,177 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="OmamagotoApp.Features.Products.ProductEditPage"
-             xmlns:viewModels="clr-namespace:OmamagotoApp.Features.Products"
-             x:DataType="viewModels:ProductEditViewModel"
-             Title="編集">
+
+<ContentPage
+    x:Class="OmamagotoApp.Features.Products.ProductEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:OmamagotoApp.Features.Products"
+    x:DataType="viewModels:ProductEditViewModel"
+    Title="しょうひんをつくる"
+    BackgroundColor="{StaticResource PageBackground}">
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+            Padding="20"
+            Spacing="20">
 
-            <Label
-                Text="ごっこオーダー"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+            <!-- ページタイトル -->
+            <VerticalStackLayout Spacing="6">
 
-            <Entry
-                Placeholder="りんご"
-                Text="{Binding ProductName}"
-                />
+                <Label
+                    Text="✏️ しょうひんをつくろう"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource BrownText}"
+                    SemanticProperties.HeadingLevel="Level1" />
 
-            <Entry
-                Placeholder="200"
-                Keyboard="Numeric"
-                Text="{ Binding ProcutPriceText}"/>
+                <Label
+                    Text="しょうひんの名前とねだんを入れてね！"
+                    FontSize="16"
+                    TextColor="{StaticResource DarkText}" />
 
-            <Label
-                Text="{ Binding ErrorMessage }"
-                TextColor="Red"
-                IsVisible="{ Binding ErrorMessage.Length}"/>
+            </VerticalStackLayout>
 
+            <!-- 入力フォーム -->
+            <Border
+                Padding="20"
+                BackgroundColor="{StaticResource CardBackground}"
+                Stroke="{StaticResource CardBorder}"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 24">
+
+                <VerticalStackLayout Spacing="20">
+
+                    <!-- 商品名 -->
+                    <VerticalStackLayout Spacing="8">
+
+                        <Label
+                            Text="🍎 しょうひんの名前"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource BrownText}" />
+
+                        <Border
+                            Padding="14,4"
+                            BackgroundColor="{StaticResource PageBackground}"
+                            Stroke="{StaticResource PrimaryYellow}"
+                            StrokeThickness="2"
+                            StrokeShape="RoundRectangle 16">
+
+                            <Entry
+                                AutomationId="ProductNameEntry"
+                                Placeholder="れい：りんご"
+                                FontSize="18"
+                                TextColor="{StaticResource BrownText}"
+                                PlaceholderColor="{StaticResource DarkText}"
+                                Text="{Binding ProductName}" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                    <!-- 価格 -->
+                    <VerticalStackLayout Spacing="8">
+
+                        <Label
+                            Text="💰 ねだん"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource BrownText}" />
+
+                        <Border
+                            Padding="14,4"
+                            BackgroundColor="{StaticResource PageBackground}"
+                            Stroke="{StaticResource PrimaryBlue}"
+                            StrokeThickness="2"
+                            StrokeShape="RoundRectangle 16">
+
+                            <Grid ColumnDefinitions="*,Auto">
+
+                                <Entry
+                                    AutomationId="ProductPriceEntry"
+                                    Placeholder="れい：200"
+                                    Keyboard="Numeric"
+                                    FontSize="18"
+                                    TextColor="{StaticResource BrownText}"
+                                    PlaceholderColor="{StaticResource DarkText}"
+                                    Text="{Binding ProductPriceText}" />
+
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    Text="えん"
+                                    FontSize="17"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource DarkText}"
+                                    VerticalOptions="Center" />
+
+                            </Grid>
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- エラー表示 -->
+            <Border
+                Padding="14"
+                BackgroundColor="#FFF0F3"
+                Stroke="{StaticResource DangerRed}"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 16"
+                IsVisible="{Binding HasError}">
+
+                <Label
+                    AutomationId="ErrorMessageLabel"
+                    Text="{Binding ErrorMessage}"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource DangerRed}" />
+
+            </Border>
+
+            <!-- 登録ボタン -->
             <Button
-                Text="とうろく"
-                Command="{ Binding SaveCommand }"/>
+                AutomationId="SaveButton"
+                Text="✨ しょうひんをとうろく"
+                FontSize="21"
+                FontAttributes="Bold"
+                HeightRequest="68"
+                CornerRadius="22"
+                BackgroundColor="{StaticResource PrimaryYellow}"
+                TextColor="{StaticResource BrownText}"
+                Command="{Binding SaveCommand}" />
 
-            <Label
-                Text="{ Binding ResultMessage }"/>
+            <!-- 登録結果 -->
+            <Border
+                Padding="14"
+                BackgroundColor="{StaticResource SoftGreen}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 16"
+                IsVisible="{Binding HasResult}">
 
+                <Label
+                    AutomationId="ResultMessageLabel"
+                    Text="{Binding ResultMessage}"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource DarkText}"
+                    HorizontalTextAlignment="Center" />
+
+            </Border>
+
+            <!-- 一覧へ -->
             <Button
-                Text="登録済み商品を見る"
+                Text="🛒 とうろくした商品をみる"
+                FontSize="19"
+                FontAttributes="Bold"
+                HeightRequest="64"
+                CornerRadius="22"
+                BackgroundColor="{StaticResource PrimaryBlue}"
+                TextColor="{StaticResource DarkText}"
                 Command="{Binding GoToListCommand}" />
 
         </VerticalStackLayout>

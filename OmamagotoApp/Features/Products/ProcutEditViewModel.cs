@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -14,6 +12,7 @@ namespace OmamagotoApp.Features.Products;
 public partial class ProductEditViewModel : PageViewModel
 {
     private readonly IProductService _productService;
+
     public ProductEditViewModel(
         IProductService productService,
         IDialogService dialogService,
@@ -22,22 +21,30 @@ public partial class ProductEditViewModel : PageViewModel
     {
         _productService = productService;
     }
+
     [ObservableProperty]
     public partial string ProductName { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string ProcutPriceText { get; set; } = string.Empty;
+    public partial string ProductPriceText { get; set; } = string.Empty;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasResult))]
     public partial string ResultMessage { get; set; } = string.Empty;
 
-
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasError))]
     public partial string ErrorMessage { get; set; } = string.Empty;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
-    public partial bool IsSaving { set; get; } = false;
+    public partial bool IsSaving { get; set; }
+
+    public bool HasError =>
+        !string.IsNullOrWhiteSpace(ErrorMessage);
+
+    public bool HasResult =>
+        !string.IsNullOrWhiteSpace(ResultMessage);
 
     private bool CanSave()
     {
@@ -45,52 +52,61 @@ public partial class ProductEditViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private async Task GoToListAsync()
+    private Task GoToListAsync()
     {
-        await NavigateToAsync(ProductRoutes.List);
+        return NavigateToAsync(ProductRoutes.List);
     }
+
     [RelayCommand(CanExecute = nameof(CanSave))]
-    private async Task Save()
+    private async Task SaveAsync()
     {
         ErrorMessage = string.Empty;
         ResultMessage = string.Empty;
+
         var name = ProductName.Trim();
 
         if (string.IsNullOrWhiteSpace(name))
         {
-            ErrorMessage = "表品名を入力してください";
+            ErrorMessage = "商品名を入力してください。";
             return;
         }
+
         if (name.Length > 20)
         {
-            ErrorMessage = "商品名は２０文字以内で入力してください。";
+            ErrorMessage = "商品名は20文字以内で入力してください。";
             return;
         }
-        if (!decimal.TryParse(ProcutPriceText, out var price))
+
+        if (!decimal.TryParse(ProductPriceText, out var price))
         {
             ErrorMessage = "価格を正しい数値で入力してください。";
             return;
         }
+
         if (price < 0)
         {
-            ErrorMessage = "価格は0以上で入力してください";
+            ErrorMessage = "価格は0以上で入力してください。";
             return;
         }
 
         try
         {
             IsSaving = true;
+
             var product = new Product
             {
                 Name = name,
                 Price = price,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow
             };
+
             await _productService.AddAsync(product);
-            ResultMessage = $"商品：{ProductName}を{ProcutPriceText:N0}円で登録しました。";
+
+            ResultMessage =
+                $"商品：{name}を{price:N0}円で登録しました。";
 
             ProductName = string.Empty;
-            ProcutPriceText = string.Empty;
+            ProductPriceText = string.Empty;
         }
         catch (Exception)
         {

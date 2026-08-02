@@ -1,62 +1,193 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="OmamagotoApp.Features.Home.HomePage">
+
+<ContentPage
+    x:Class="OmamagotoApp.Features.Home.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:OmamagotoApp.Features.Home"
+    x:DataType="viewModels:HomeViewModel"
+    Title="ホーム"
+    BackgroundColor="{StaticResource PageBackground}">
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a submarine number ten" />
+            Padding="20"
+            Spacing="20">
+
+            <!-- タイトルエリア -->
+            <Border
+                Padding="20"
+                BackgroundColor="{StaticResource CardBackground}"
+                Stroke="{StaticResource CardBorder}"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 28">
+
+                <Grid
+                    RowDefinitions="Auto,Auto"
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="16"
+                    RowSpacing="4">
+
+                    <Border
+                        Grid.RowSpan="2"
+                        WidthRequest="76"
+                        HeightRequest="76"
+                        BackgroundColor="{StaticResource PrimaryYellow}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 24">
+
+                        <Label
+                            Text="🏪"
+                            FontSize="40"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center" />
+
+                    </Border>
+
+                    <Label
+                        Grid.Column="1"
+                        Text="ごっこオーダー"
+                        FontSize="30"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource BrownText}"
+                        VerticalOptions="End"
+                        SemanticProperties.HeadingLevel="Level1" />
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="おみせやさんごっこをはじめよう！"
+                        FontSize="15"
+                        TextColor="{StaticResource DarkText}"
+                        VerticalOptions="Start" />
+
+                </Grid>
+
+            </Border>
+
+            <!-- アプリ説明 -->
+            <Border
+                Padding="18"
+                BackgroundColor="{StaticResource PrimaryBlue}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 22">
+
+                <Grid
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="12">
+
+                    <Label
+                        Text="🌟"
+                        FontSize="30"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Column="1"
+                        Text="商品をつくって注文できる、おみせやさんごっこアプリ。"
+                        FontSize="17"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource DarkText}"
+                        VerticalOptions="Center"
+                        SemanticProperties.HeadingLevel="Level2"
+                        SemanticProperties.Description="商品をつくって注文できる、おみせやさんごっこアプリ。" />
+
+                </Grid>
+
+            </Border>
+
+            <!-- メインメニュー -->
+            <Label
+                Text="なにをする？"
+                FontSize="22"
+                FontAttributes="Bold"
+                TextColor="{StaticResource BrownText}"
+                Margin="4,4,0,0" />
+
+            <Button
+                Text="✏️  商品を登録・編集する"
+                FontSize="22"
+                FontAttributes="Bold"
+                HeightRequest="120"
+                CornerRadius="24"
+                BackgroundColor="{StaticResource PrimaryYellow}"
+                TextColor="{StaticResource BrownText}"
+                Command="{Binding GoToProductEditPageCommand}"
+                SemanticProperties.Hint="商品を登録または編集する画面へ移動します" />
+
+            <Button
+                Text="🛒  注文をはじめる"
+                FontSize="22"
+                FontAttributes="Bold"
+                HeightRequest="120"
+                CornerRadius="24"
+                BackgroundColor="{StaticResource PrimaryBlue}"
+                TextColor="{StaticResource DarkText}"
+                SemanticProperties.Hint="注文を始める画面へ移動します" />
+
+            <!-- 補助機能 -->
+            <Border
+                Padding="18"
+                BackgroundColor="{StaticResource CardBackground}"
+                Stroke="{StaticResource CardBorder}"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 24">
+
+                <VerticalStackLayout Spacing="14">
+
+                    <Label
+                        Text="🧪 おためしボタン"
+                        FontSize="19"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource BrownText}" />
 
                     <Button
-                        Text="情報ダイアログを表示"
+                        Text="ℹ️ 情報ダイアログを表示"
+                        FontSize="17"
+                        FontAttributes="Bold"
+                        HeightRequest="56"
+                        CornerRadius="18"
+                        BackgroundColor="{StaticResource SoftGreen}"
+                        TextColor="{StaticResource DarkText}"
                         Command="{Binding ShowTestDialogCommand}" />
 
                     <Button
-                        Text="確認ダイアログを表示"
+                        Text="❓ 確認ダイアログを表示"
+                        FontSize="17"
+                        FontAttributes="Bold"
+                        HeightRequest="56"
+                        CornerRadius="18"
+                        BackgroundColor="{StaticResource SoftPink}"
+                        TextColor="{StaticResource BrownText}"
                         Command="{Binding ConfirmTestCommand}" />
 
+                    <Button
+                        x:Name="CounterBtn"
+                        Text="👆 Click me"
+                        FontSize="17"
+                        FontAttributes="Bold"
+                        HeightRequest="56"
+                        CornerRadius="18"
+                        BackgroundColor="{StaticResource PageBackground}"
+                        TextColor="{StaticResource BrownText}"
+                        BorderColor="{StaticResource CardBorder}"
+                        BorderWidth="2"
+                        Clicked="OnCounterClicked"
+                        HorizontalOptions="Fill"
+                        SemanticProperties.Hint="押した回数を数えます" />
 
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- 下部の飾り -->
             <Label
-                Text="ごっこオーダー"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+                Text="🍎　🥕　🍞　🥛"
+                FontSize="30"
+                HorizontalTextAlignment="Center"
+                Margin="0,4,0,16" />
 
-            <Label
-                Text="商品をつくって注文できる、おみせやさんごっこアプリ。"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="商品をつくって注文できる、おみせやさんごっこアプリ。" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" />
-            <Button
-                Text="✏️　商品を登録・編集する"
-                FontSize="22"
-                FontAttributes="Bold"
-                HeightRequest="120"
-                CornerRadius="24"
-                BackgroundColor="#FFD166"
-                TextColor="#40362E"
-                Command="{ Binding GoToProductEditPageCommand }"/>
-
-            <Button
-                Text="🛒　注文をはじめる"
-                FontSize="22"
-                FontAttributes="Bold"
-                HeightRequest="120"
-                CornerRadius="24"
-                BackgroundColor="#73D2DE"
-                TextColor="#263238" />
         </VerticalStackLayout>
     </ScrollView>
 

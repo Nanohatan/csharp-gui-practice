@@ -1,31 +1,171 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="OmamagotoApp.Features.Products.ProductListPage"
-             xmlns:models="clr-namespace:OmamagotoApp.Features.Products.Models"
-             x:DataType="models:Product"
-             Title="一覧">
 
-<CollectionView ItemsSource="{Binding Products}">
-    <CollectionView.ItemTemplate>
-        <DataTemplate
-            x:DataType="models:Product">
+<ContentPage
+    x:Class="OmamagotoApp.Features.Products.ProductListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:OmamagotoApp.Features.Products.Models"
+    xmlns:viewModels="clr-namespace:OmamagotoApp.Features.Products"
+    x:DataType="viewModels:ProductListViewModel"
+    Title="しょうひんいちらん"
+    BackgroundColor="{StaticResource PageBackground}">
 
-            <Grid
-                Padding="12"
-                ColumnDefinitions="*,Auto">
+    <Grid
+        Padding="20"
+        RowDefinitions="Auto,Auto,*"
+        RowSpacing="16">
 
-                <Label
-                    Text="{Binding Name}" />
+        <!-- タイトル -->
+        <VerticalStackLayout
+            Grid.Row="0"
+            Spacing="4">
 
-                <Label
-                    Grid.Column="1"
-                    Text="{Binding Price,
-                        StringFormat='{0:N0}円'}" />
+            <Label
+                Text="🧸 おみせの商品"
+                FontSize="30"
+                FontAttributes="Bold"
+                TextColor="{StaticResource BrownText}" />
 
-            </Grid>
-        </DataTemplate>
-    </CollectionView.ItemTemplate>
-</CollectionView>
+            <Label
+                Text="すきな商品をえらんでね！"
+                FontSize="16"
+                TextColor="{StaticResource DarkText}" />
+
+        </VerticalStackLayout>
+
+        <!-- 件数や補助表示 -->
+        <Border
+            Grid.Row="1"
+            Padding="14,10"
+            BackgroundColor="{StaticResource PrimaryBlue}"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 18">
+
+            <Label
+                Text="🛒 とうろくされた商品"
+                FontSize="17"
+                FontAttributes="Bold"
+                TextColor="{StaticResource DarkText}" />
+
+        </Border>
+
+        <!-- 商品一覧 -->
+        <CollectionView
+            Grid.Row="2"
+            ItemsSource="{Binding Products}"
+            SelectionMode="None">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout
+                    Padding="24"
+                    Spacing="12"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                    <Label
+                        Text="📦"
+                        FontSize="64"
+                        HorizontalTextAlignment="Center" />
+
+                    <Label
+                        Text="まだ商品がありません"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource BrownText}"
+                        HorizontalTextAlignment="Center" />
+
+                    <Label
+                        Text="商品をとうろくして、おみせをつくろう！"
+                        FontSize="15"
+                        TextColor="{StaticResource DarkText}"
+                        HorizontalTextAlignment="Center" />
+
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Vertical"
+                    ItemSpacing="14" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Product">
+
+                    <Border
+                        Padding="18"
+                        BackgroundColor="{StaticResource CardBackground}"
+                        Stroke="{StaticResource CardBorder}"
+                        StrokeThickness="2"
+                        StrokeShape="RoundRectangle 24">
+
+                        <Grid
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="14">
+
+                            <!-- 商品アイコン -->
+                            <Border
+                                WidthRequest="58"
+                                HeightRequest="58"
+                                BackgroundColor="{StaticResource PrimaryYellow}"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 18">
+
+                                <Label
+                                    Text="🍎"
+                                    FontSize="30"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    VerticalTextAlignment="Center" />
+
+                            </Border>
+
+                            <!-- 商品名 -->
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Spacing="4"
+                                VerticalOptions="Center">
+
+                                <Label
+                                    Text="{Binding Name}"
+                                    FontSize="21"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource BrownText}"
+                                    LineBreakMode="TailTruncation" />
+
+                                <Label
+                                    Text="しょうひん"
+                                    FontSize="13"
+                                    TextColor="{StaticResource DarkText}" />
+
+                            </VerticalStackLayout>
+
+                            <!-- 価格 -->
+                            <Border
+                                Grid.Column="2"
+                                Padding="14,8"
+                                BackgroundColor="{StaticResource PrimaryBlue}"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 16"
+                                VerticalOptions="Center">
+
+                                <Label
+                                    Text="{Binding Price, StringFormat='{0:N0}円'}"
+                                    FontSize="18"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource DarkText}" />
+
+                            </Border>
+
+                        </Grid>
+
+                    </Border>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
 
 </ContentPage>
