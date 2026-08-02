@@ -2,16 +2,26 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using OmamagotoApp.Services.Dialogs;
+using OmamagotoApp.Services.Navigation;
 
 namespace OmamagotoApp.Features.ViewModels;
 
 public partial class PageViewModel : ObservableObject
 {
     private readonly IDialogService _dialogService;
+    private readonly INavigationService _navigationService;
 
-    public PageViewModel(IDialogService dialogService)
+    public PageViewModel(
+        IDialogService dialogService,
+        INavigationService navigationService)
     {
         _dialogService = dialogService;
+        _navigationService = navigationService;
+    }
+
+    protected async Task NavigateToAsync(string route)
+    {
+        await _navigationService.GoToAsync(route);
     }
 
     [RelayCommand]

@@ -6,10 +6,6 @@ public partial class HomePage : ContentPage
 {
     int _count = 0;
 
-    public HomePage()
-    {
-    }
-
     public HomePage(HomeViewModel viewModel)
     {
         InitializeComponent();
@@ -26,10 +22,4 @@ public partial class HomePage : ContentPage
             CounterBtn.Text = $"Clicked {_count} times";
         SemanticScreenReader.Announce(CounterBtn.Text);
     }
-
-    private async void OnCreateProductClicked(object? sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(ProductEditPage));
-    }
-
 }

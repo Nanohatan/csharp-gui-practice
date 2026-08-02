@@ -5,13 +5,20 @@ using CommunityToolkit.Mvvm.Input;
 
 using OmamagotoApp.Features.Products.Models;
 using OmamagotoApp.Features.Products.Services;
+using OmamagotoApp.Features.ViewModels;
+using OmamagotoApp.Services.Dialogs;
+using OmamagotoApp.Services.Navigation;
 
 namespace OmamagotoApp.Features.Products;
 
-public partial class ProductEditViewModel : ObservableObject
+public partial class ProductEditViewModel : PageViewModel
 {
     private readonly IProductService _productService;
-    public ProductEditViewModel(IProductService productService)
+    public ProductEditViewModel(
+        IProductService productService,
+        IDialogService dialogService,
+        INavigationService navigationService)
+        : base(dialogService, navigationService)
     {
         _productService = productService;
     }
@@ -40,7 +47,7 @@ public partial class ProductEditViewModel : ObservableObject
     [RelayCommand]
     private async Task GoToListAsync()
     {
-        await Shell.Current.GoToAsync(nameof(ProductListPage));
+        await NavigateToAsync(ProductRoutes.List);
     }
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task Save()

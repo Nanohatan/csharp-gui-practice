@@ -47,7 +47,7 @@
                 CornerRadius="24"
                 BackgroundColor="#FFD166"
                 TextColor="#40362E"
-                Clicked="OnCreateProductClicked" />
+                Command="{ Binding GoToProductEditPageCommand }"/>
 
             <Button
                 Text="🛒　注文をはじめる"
