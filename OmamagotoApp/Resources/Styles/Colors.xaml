@@ -3,6 +3,24 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <!-- メインカラー -->
+    <Color x:Key="PrimaryYellow">#FFD166</Color>
+    <Color x:Key="PrimaryBlue">#73D2DE</Color>
+
+    <!-- 文字色 -->
+    <Color x:Key="BrownText">#40362E</Color>
+    <Color x:Key="DarkText">#263238</Color>
+
+    <!-- 背景・カード -->
+    <Color x:Key="PageBackground">#FFF8E7</Color>
+    <Color x:Key="CardBackground">#FFFFFF</Color>
+    <Color x:Key="CardBorder">#F2DCA7</Color>
+
+    <!-- 補助色 -->
+    <Color x:Key="SoftPink">#FFB4C8</Color>
+    <Color x:Key="SoftGreen">#A8E6CF</Color>
+    <Color x:Key="DangerRed">#E85D75</Color>
+
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
     <Color x:Key="Primary">#512BD4</Color>
