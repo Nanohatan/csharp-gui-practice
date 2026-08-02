@@ -26,7 +26,7 @@ public static class MauiProgram
 
         builder.Services
             .AddHomeFeature()
-            .AddProductEditFeature();
+            .AddProductFeature();
 
 
 
