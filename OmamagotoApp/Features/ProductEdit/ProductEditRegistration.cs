@@ -7,6 +7,7 @@ public static class ProductEditPageRegistration
         this IServiceCollection services)
     {
         services.AddTransient<ProductEditPage>();
+        services.AddTransient<ProductEditViewModel>();
         return services;
     }
 }

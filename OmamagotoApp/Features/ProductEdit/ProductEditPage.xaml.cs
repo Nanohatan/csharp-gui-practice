@@ -3,8 +3,9 @@ namespace OmamagotoApp.Features.ProductEdit;
 
 public partial class ProductEditPage : ContentPage
 {
-    public ProductEditPage()
+    public ProductEditPage(ProductEditViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
     }
 }

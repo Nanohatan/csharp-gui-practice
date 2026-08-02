@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OmamagotoApp.Features.ProductEdit.ProductEditPage"
+             xmlns:viewModels="clr-namespace:OmamagotoApp.Features.ProductEdit"
+             x:DataType="viewModels:ProductEditViewModel"
              Title="編集">
 
     <ScrollView>
@@ -14,6 +16,27 @@
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
 
+            <Entry
+                Placeholder="りんご"
+                Text="{Binding ProductName}"
+                />
+
+            <Entry
+                Placeholder="200"
+                Keyboard="Numeric"
+                Text="{ Binding ProcutPriceText}"/>
+
+            <Label
+                Text="{ Binding ErrorMessage }"
+                TextColor="Red"
+                IsVisible="{ Binding ErrorMessage.Length}"/>
+
+            <Button
+                Text="とうろく"
+                Command="{ Binding SaveCommand }"/>
+
+            <Label
+                Text="{ Binding ResultMessage }"/>
 
         </VerticalStackLayout>
     </ScrollView>

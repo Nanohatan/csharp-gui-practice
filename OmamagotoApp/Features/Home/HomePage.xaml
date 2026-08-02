@@ -40,7 +40,7 @@
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Fill" />
             <Button
-                Text="✏️　商品をつくる"
+                Text="✏️　商品を登録・編集する"
                 FontSize="22"
                 FontAttributes="Bold"
                 HeightRequest="120"
