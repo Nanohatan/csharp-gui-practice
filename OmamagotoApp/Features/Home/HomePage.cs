@@ -1,4 +1,4 @@
-﻿using OmamagotoApp.Features.ProductEdit;
+﻿using OmamagotoApp.Features.Products;
 
 namespace OmamagotoApp.Features.Home;
 

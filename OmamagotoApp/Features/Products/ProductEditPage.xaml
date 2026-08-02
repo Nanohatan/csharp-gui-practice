@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="OmamagotoApp.Features.ProductEdit.ProductEditPage"
-             xmlns:viewModels="clr-namespace:OmamagotoApp.Features.ProductEdit"
+             x:Class="OmamagotoApp.Features.Products.ProductEditPage"
+             xmlns:viewModels="clr-namespace:OmamagotoApp.Features.Products"
              x:DataType="viewModels:ProductEditViewModel"
              Title="編集">
 

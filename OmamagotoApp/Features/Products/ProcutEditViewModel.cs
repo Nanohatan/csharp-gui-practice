@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace OmamagotoApp.Features.ProductEdit;
+namespace OmamagotoApp.Features.Products;
 
 public partial class ProductEditViewModel : ObservableObject
 {

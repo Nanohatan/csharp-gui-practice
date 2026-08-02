@@ -2,7 +2,7 @@
 
 using OmamagotoApp.Services.Dialogs;
 using OmamagotoApp.Features.Home;
-using OmamagotoApp.Features.ProductEdit;
+using OmamagotoApp.Features.Products;
 using OmamagotoApp.Services.Errors;
 namespace OmamagotoApp;
 

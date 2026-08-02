@@ -1,5 +1,5 @@
 
-namespace OmamagotoApp.Features.ProductEdit;
+namespace OmamagotoApp.Features.Products;
 
 public static class ProductEditPageRegistration
 {
