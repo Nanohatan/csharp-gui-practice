@@ -97,6 +97,7 @@ public partial class ProductEditViewModel : PageViewModel
             {
                 Name = name,
                 Price = price,
+                ImageSource = "dammy400x400.png",
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -108,9 +109,9 @@ public partial class ProductEditViewModel : PageViewModel
             ProductName = string.Empty;
             ProductPriceText = string.Empty;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            ErrorMessage = "商品の登録に失敗しました。";
+            ErrorMessage = $"商品の登録に失敗しました。\n {ex}";
         }
         finally
         {

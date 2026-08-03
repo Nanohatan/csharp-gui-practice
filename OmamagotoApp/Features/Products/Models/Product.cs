@@ -14,6 +14,8 @@ public sealed class Product
     public string Name { get; set; } = string.Empty;
 
     public decimal Price { get; set; }
+
+    public string ImageSource { get; set; } = "dammy400x400.png";
     public DateTime CreatedAt { get; set; }
 
 }

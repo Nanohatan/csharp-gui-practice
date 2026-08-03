@@ -111,13 +111,10 @@
                                 StrokeThickness="0"
                                 StrokeShape="RoundRectangle 18">
 
-                                <Label
-                                    Text="🍎"
-                                    FontSize="30"
+                                <Image
+                                    Source="{ Binding ImageSource }"
                                     HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    HorizontalTextAlignment="Center"
-                                    VerticalTextAlignment="Center" />
+                                    VerticalOptions="Center"/>
 
                             </Border>
 
