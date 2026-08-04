@@ -97,7 +97,7 @@ public partial class ProductEditViewModel : PageViewModel
             {
                 Name = name,
                 Price = price,
-                ImageSource = "dammy400x400.png",
+                ImageSource = "dummy400x400.png",
                 CreatedAt = DateTime.UtcNow
             };
 
