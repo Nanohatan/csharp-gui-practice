@@ -26,7 +26,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<IErrorHandler, ErrorHandler>();
 
-        builder.Services.AddSingleton<IDialogService, DialogService>();
 
         builder.Services
             .AddHomeFeature()
