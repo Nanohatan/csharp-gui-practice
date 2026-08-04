@@ -11,6 +11,7 @@
         }
       ],
       "dest": "api",
+      "namespaceLayout":"nested",
             "properties": {
         "TargetFramework": "net10.0-android",
         "AndroidSdkDirectory": "C:\\Users\\koara\\AppData\\Local\\Android\\Sdk",
