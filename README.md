@@ -31,14 +31,17 @@
     - [ ] プロダクトテーブルを操作する処理追加
         - [ ] レコード数指定した分だけの件数を取得
     - [x] プレースホルダー画像を設定する。
-    - [ ] モデル、テーブル変更
-        - [ ] 画像を保持できるように。
+    - モデル、テーブル変更
+        - [x] 画像を保持できるように。
     - UI
-        -  ボタンスタイル共通Style化
-    - Log出力
-    - [ ] codex用Agent.md, skills.md, イシューテンプレを作る。
+        -  [x] ボタンスタイル共通Style化
 
-次→登録した商品が、注文側から見える。
+    - [ ] codex用Agent.md, skills.md, イシューテンプレを作る。
+- 重そうな作業
+    - UIテスト(Appium)追加
+    - Log出力
+
+次→登録した商品が、注文側から見える。UIテスト、CIに追加。
 
 ## プロダクトゴール
 子供が子どもが店員役とお客さん役に分かれ、実際のお店のような注文体験を楽しめる
@@ -74,7 +77,7 @@ MVP、ユーザーが価値を感じられる最小構成
     - エディタ設定
 
 
-## トラブルシューティング
+## トラブルシューティング　
 - vscodeにxamlのxamlライブビューイング拡張を入れたが、`command 'avalonia.showPreviewToSide`
     - 解決→https://github.com/AvaloniaUI/AvaloniaPro/issues/17、　vscode versionあげる。
 - プロジェクトをリセットしたから、ci.yml一旦動かしたくない
@@ -86,6 +89,8 @@ MVP、ユーザーが価値を感じられる最小構成
     - android sdkを
 - Product にImageSourceを追加後、商品に関する操作ができなくなった。
     - ``ImageSource ImageSource``としていたのが問題。ImageSource は.NET MAUIのUI型で、SQLiteがそのまま保存できる型ではないため。
+- DynamicResoruceの意味、呼び出しで同じプロパティを指定したら呼び出し側が優先されるのに
+    - DynamicResourceなら画面生成後も更新できる。Statciresourceは画面生成時に一度だけ取得する。
 
 ## ビルド・テスト
 - 依存ライブラリのインストール、ビルド、静的コードチェックを実装した。

@@ -106,22 +106,15 @@
                 Margin="4,4,0,0" />
 
             <Button
+                Style="{StaticResource LargeMenuButtonStyle}"
                 Text="✏️  商品を登録・編集する"
-                FontSize="22"
-                FontAttributes="Bold"
-                HeightRequest="120"
-                CornerRadius="24"
                 BackgroundColor="{StaticResource PrimaryYellow}"
-                TextColor="{StaticResource BrownText}"
                 Command="{Binding GoToProductEditPageCommand}"
-                SemanticProperties.Hint="商品を登録または編集する画面へ移動します" />
+                SemanticProperties.Hint="商品を登録または編集する画面へ移動します"/>
 
             <Button
+                Style="{StaticResource LargeMenuButtonStyle}"
                 Text="🛒  注文をはじめる"
-                FontSize="22"
-                FontAttributes="Bold"
-                HeightRequest="120"
-                CornerRadius="24"
                 BackgroundColor="{StaticResource PrimaryBlue}"
                 TextColor="{StaticResource DarkText}"
                 SemanticProperties.Hint="注文を始める画面へ移動します" />
