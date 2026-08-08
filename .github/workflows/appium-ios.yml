@@ -106,6 +106,12 @@ jobs:
       - name: Restore
         run: dotnet restore OmamagotoApp.slnx
 
+
+      - name: Check repository files
+        run: |
+          pwd
+          ls -la
+          find . -maxdepth 2 -type f | sort
       # ----------------------------
       # MAUI iOS build
       # ----------------------------
