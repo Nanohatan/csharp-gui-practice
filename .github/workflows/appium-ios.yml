@@ -1,0 +1,217 @@
+name: Appium iOS Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+env:
+  BUNDLE_ID: com.companyname.omamagotoapp
+  APPIUM_HOST: http://127.0.0.1:4723/
+
+jobs:
+  appium-ios:
+    runs-on: macos-15
+
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ----------------------------
+      # .NET / MAUI
+      # ----------------------------
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui
+
+      - name: Show .NET info
+        run: dotnet --info
+
+      # ----------------------------
+      # Node / Appium
+      # ----------------------------
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install Appium
+        run: npm ci
+
+      - name: Show Appium info
+        run: |
+          npx appium --version
+          npx appium driver list --installed
+
+      # ----------------------------
+      # Simulator を選択
+      # ----------------------------
+      - name: Select iOS Simulator
+        id: simulator
+        shell: bash
+        run: |
+          echo "=== Available simulators ==="
+          xcrun simctl list devices available
+
+          LINE=$(xcrun simctl list devices available \
+            | grep -E "iPhone.*\([0-9A-F-]{36}\)" \
+            | head -1)
+
+          if [ -z "$LINE" ]; then
+            echo "No iPhone simulator found."
+            exit 1
+          fi
+
+          UDID=$(echo "$LINE" \
+            | grep -Eo '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}')
+
+          DEVICE_NAME=$(echo "$LINE" \
+            | sed -E 's/^[[:space:]]*//' \
+            | sed -E 's/[[:space:]]+\([0-9A-F-]{36}\).*//')
+
+          echo "DEVICE_NAME=$DEVICE_NAME"
+          echo "UDID=$UDID"
+
+          echo "device_name=$DEVICE_NAME" >> "$GITHUB_OUTPUT"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
+      # ----------------------------
+      # Simulator 起動
+      # ----------------------------
+      - name: Boot Simulator
+        run: |
+          xcrun simctl boot "${{ steps.simulator.outputs.udid }}" || true
+
+          open -a Simulator
+
+          xcrun simctl bootstatus \
+            "${{ steps.simulator.outputs.udid }}" \
+            -b
+
+      # ----------------------------
+      # Restore
+      # ----------------------------
+      - name: Restore
+        run: dotnet restore OmamagotoApp.slnx
+
+      # ----------------------------
+      # MAUI iOS build
+      # ----------------------------
+      - name: Build MAUI iOS app
+        run: |
+          dotnet build OmamagotoApp.csproj \
+            -f net10.0-ios \
+            -c Debug \
+            -p:RuntimeIdentifier=iossimulator-arm64
+
+      # ----------------------------
+      # .app を探す
+      # ----------------------------
+      - name: Find MAUI app
+        id: app
+        shell: bash
+        run: |
+          APP_PATH=$(find . \
+            -path "*/bin/Debug/*" \
+            -type d \
+            -name "*.app" \
+            | head -1)
+
+          if [ -z "$APP_PATH" ]; then
+            echo "MAUI .app was not found."
+
+            echo "=== Available .app files ==="
+            find . -type d -name "*.app" || true
+
+            exit 1
+          fi
+
+          echo "App found:"
+          echo "$APP_PATH"
+
+          echo "path=$APP_PATH" >> "$GITHUB_OUTPUT"
+
+      # ----------------------------
+      # Simulator にアプリ install
+      # ----------------------------
+      - name: Install MAUI app
+        run: |
+          xcrun simctl install \
+            "${{ steps.simulator.outputs.udid }}" \
+            "${{ steps.app.outputs.path }}"
+
+      # ----------------------------
+      # Appium 起動
+      # ----------------------------
+      - name: Start Appium
+        shell: bash
+        run: |
+          npx appium \
+            --address 127.0.0.1 \
+            --port 4723 \
+            > appium.log 2>&1 &
+
+          echo $! > appium.pid
+
+          for i in {1..30}; do
+            if curl -sf \
+              http://127.0.0.1:4723/status \
+              > /dev/null; then
+
+              echo "Appium is ready."
+              exit 0
+            fi
+
+            sleep 1
+          done
+
+          echo "Appium failed to start."
+          cat appium.log
+          exit 1
+
+      # ----------------------------
+      # テスト
+      # ----------------------------
+      - name: Run Appium test
+        env:
+          DEVICE_NAME: ${{ steps.simulator.outputs.device_name }}
+          UDID: ${{ steps.simulator.outputs.udid }}
+
+          # 上の job env がそのまま使われる
+          # BUNDLE_ID
+          # APPIUM_HOST
+        run: |
+          echo "DEVICE_NAME=$DEVICE_NAME"
+          echo "UDID=$UDID"
+          echo "BUNDLE_ID=$BUNDLE_ID"
+          echo "APPIUM_HOST=$APPIUM_HOST"
+
+          dotnet test appiumtest.csproj \
+            -c Debug \
+            --no-restore \
+            --logger "trx;LogFileName=appium-tests.trx"
+
+      # ----------------------------
+      # 失敗時にも Appium ログを見る
+      # ----------------------------
+      - name: Show Appium log
+        if: always()
+        run: cat appium.log || true
+
+      - name: Upload test result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: appium-test-results
+          path: |
+            **/TestResults/**
+            appium.log

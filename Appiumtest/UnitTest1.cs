@@ -10,55 +10,54 @@ public class Tests
     private IOSDriver _driver = null!;
 
     [OneTimeSetUp]
-    public void SetUp()
+    public void OneTimeSetUp()
     {
-        var serverUri = new Uri(
-            Environment.GetEnvironmentVariable("APPIUM_HOST")
-            ?? "http://127.0.0.1:4723/"
-        );
+        var deviceName = Environment.GetEnvironmentVariable("DEVICE_NAME")
+            ?? throw new InvalidOperationException("DEVICE_NAME is not set.");
 
-        var driverOptions = new AppiumOptions
+        var udid = Environment.GetEnvironmentVariable("UDID")
+            ?? throw new InvalidOperationException("UDID is not set.");
+
+        var bundleId = Environment.GetEnvironmentVariable("BUNDLE_ID")
+            ?? throw new InvalidOperationException("BUNDLE_ID is not set.");
+
+        var appiumHost = Environment.GetEnvironmentVariable("APPIUM_HOST")
+            ?? "http://127.0.0.1:4723/";
+
+        var options = new AppiumOptions
         {
             AutomationName = "XCUITest",
             PlatformName = "iOS",
-            DeviceName = "iPad Air 11-inch (M4)"
+            DeviceName = deviceName
         };
 
-        driverOptions.AddAdditionalAppiumOption(
-            "bundleId",
-            "com.companyname.omamagotoapp"
-        );
-
-        driverOptions.AddAdditionalAppiumOption(
-            "noReset",
-            true
-        );
+        options.AddAdditionalAppiumOption("udid", udid);
+        options.AddAdditionalAppiumOption("bundleId", bundleId);
 
         _driver = new IOSDriver(
-            serverUri,
-            driverOptions,
+            new Uri(appiumHost),
+            options,
             TimeSpan.FromSeconds(180)
         );
-
-        _driver.Manage()
-            .Timeouts()
-            .ImplicitWait = TimeSpan.FromSeconds(10);
-    }
-
-    [OneTimeTearDown]
-    public void TearDown()
-    {
-        _driver?.Quit();
-        _driver?.Dispose();
     }
 
     [Test]
-    public void TestApp()
+    public void ProductEditButton_CanClick()
     {
-        var element = _driver.FindElement(
+        var button = _driver.FindElement(
             MobileBy.AccessibilityId("Home_ProductEditButton")
         );
 
-        element.Click();
+        Assert.That(button.Displayed, Is.True);
+        Assert.That(button.Enabled, Is.True);
+
+        button.Click();
+    }
+
+    [OneTimeTearDown]
+    public void OneTimeTearDown()
+    {
+        _driver?.Quit();
+        _driver?.Dispose();
     }
 }
