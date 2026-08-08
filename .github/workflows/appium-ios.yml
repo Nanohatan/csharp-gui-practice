@@ -46,9 +46,11 @@ jobs:
           cache-dependency-path: Appiumtest/package-lock.json
 
       - name: Install Appium
+        working-directory: Appiumtest
         run: npm ci
 
       - name: Show Appium info
+        working-directory: Appiumtest
         run: |
           npx appium --version
           npx appium driver list --installed
