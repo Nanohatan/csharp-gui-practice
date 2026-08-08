@@ -39,10 +39,11 @@ jobs:
       # Node / Appium
       # ----------------------------
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '22'
+          node-version: '24'
           cache: npm
+          cache-dependency-path: Appiumtest/package-lock.json
 
       - name: Install Appium
         run: npm ci
