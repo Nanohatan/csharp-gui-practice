@@ -6,6 +6,7 @@ using OmamagotoApp.Features.Products;
 using OmamagotoApp.Services.Errors;
 using OmamagotoApp.Services.Navigation;
 using OmamagotoApp.Services.Database;
+using Microsoft.Maui.Handlers;
 namespace OmamagotoApp;
 
 public static class MauiProgram
@@ -13,6 +14,16 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
+        EntryHandler.Mapper.AppendToMapping("BorderlessEntry", (handler, view) =>
+        {
+#if ANDROID
+    handler.PlatformView.Background = null;
+
+#elif IOS || MACCATALYST
+            handler.PlatformView.BorderStyle =
+                UIKit.UITextBorderStyle.None;
+#endif
+        });
         builder
             .UseMauiApp<App>()
             .ConfigureFonts(fonts =>
