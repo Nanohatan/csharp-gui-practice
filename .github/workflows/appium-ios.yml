@@ -106,12 +106,6 @@ jobs:
       - name: Restore
         run: dotnet restore OmamagotoApp.slnx
 
-
-      - name: Check repository files
-        run: |
-          pwd
-          ls -la
-          find . -maxdepth 2 -type f | sort
       # ----------------------------
       # MAUI iOS build
       # ----------------------------
@@ -159,6 +153,7 @@ jobs:
       # Appium 起動
       # ----------------------------
       - name: Start Appium
+        working-directory: Appiumtest
         shell: bash
         run: |
           npx appium \
@@ -188,6 +183,7 @@ jobs:
       # テスト
       # ----------------------------
       - name: Run Appium test
+        working-directory: Appiumtest
         env:
           DEVICE_NAME: ${{ steps.simulator.outputs.device_name }}
           UDID: ${{ steps.simulator.outputs.udid }}
@@ -210,6 +206,7 @@ jobs:
       # 失敗時にも Appium ログを見る
       # ----------------------------
       - name: Show Appium log
+        working-directory: Appiumtest
         if: always()
         run: cat appium.log || true
 
@@ -219,5 +216,5 @@ jobs:
         with:
           name: appium-test-results
           path: |
-            **/TestResults/**
-            appium.log
+            Appiumtest/**/TestResults/**
+            Appiumtest/appium.log
