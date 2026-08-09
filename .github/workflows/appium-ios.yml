@@ -129,23 +129,20 @@ jobs:
         id: app
         shell: bash
         run: |
-          APP_PATH=$(find . \
-            -path "*/bin/Debug/*" \
-            -type d \
-            -name "*.app" \
-            | head -1)
+          APP_PATH="OmamagotoApp/bin/Debug/net10.0-ios/iossimulator-arm64/OmamagotoApp.app"
 
-          if [ -z "$APP_PATH" ]; then
-            echo "MAUI .app was not found."
-
-            echo "=== Available .app files ==="
-            find . -type d -name "*.app" || true
-
+          if [ ! -d "$APP_PATH" ]; then
+            echo "MAUI app not found: $APP_PATH"
+            echo "=== .app candidates ==="
+            find OmamagotoApp/bin -type d -name "*.app" || true
             exit 1
           fi
 
-          echo "App found:"
-          echo "$APP_PATH"
+          echo "App found: $APP_PATH"
+
+          /usr/libexec/PlistBuddy \
+            -c "Print :CFBundleIdentifier" \
+            "$APP_PATH/Info.plist"
 
           echo "path=$APP_PATH" >> "$GITHUB_OUTPUT"
 
