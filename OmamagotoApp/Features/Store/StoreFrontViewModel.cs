@@ -5,43 +5,35 @@ using OmamagotoApp.Services.Navigation;
 
 using System.Collections.ObjectModel;
 using OmamagotoApp.Features.Products.Models;
+using OmamagotoApp.Features.Products.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using SQLitePCL;
+using System.Diagnostics;
 
 namespace OmamagotoApp.Features.Store;
 
 public partial class StoreFrontViewModel : PageViewModel
 {
+    private readonly IProductService _productService;
+
+    public ObservableCollection<Product> Products { get; } = new();
+
     public StoreFrontViewModel(
         IDialogService dialogService,
-        INavigationService navigationService)
+        INavigationService navigationService,
+        IProductService productService)
         : base(dialogService, navigationService)
     {
+        _productService = productService;
     }
 
-    public ObservableCollection<Product> Products { get; } = new()
+    public async Task LoadAsync()
     {
-        new Product
+        var products = await _productService.GetLimitedAsync(5);
+        Debug.WriteLine(products);
+        foreach (var product in products)
         {
-            Name = "りんご",
-            Price = 200,
-        },
-        new Product
-        {
-            Name = "ぎゅうにゅう",
-            Price = 180,
-            ImageSource = "milk.jpg"
-        },
-        new Product
-        {
-            Name = "パン",
-            Price = 150,
-            ImageSource = "bread.jpg"
-        },
-        new Product
-        {
-            Name = "バナナ",
-            Price = 120,
-            ImageSource = "banana.jpg"
+            Products.Add(product);
         }
-    };
+    }
 }

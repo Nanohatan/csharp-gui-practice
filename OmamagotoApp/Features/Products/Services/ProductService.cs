@@ -28,6 +28,15 @@ public sealed class ProductService : IProductService
             .OrderByDescending(product => product.CreatedAt)
             .ToListAsync();
     }
+    public async Task<IReadOnlyList<Product>> GetLimitedAsync(int count)
+    {
+        var db = await _databaseService.GetConnectionAsync();
+
+        return await db.Table<Product>()
+            .OrderByDescending(product => product.CreatedAt)
+            .Take(count)
+            .ToListAsync();
+    }
 
     public async Task<Product?> GetByIdAsync(int id)
     {

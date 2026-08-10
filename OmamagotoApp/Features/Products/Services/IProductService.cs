@@ -20,6 +20,8 @@ public interface IProductService
     /// <returns>商品の読み取り専用一覧。</returns>
     Task<IReadOnlyList<Product>> GetAllAsync();
 
+    Task<IReadOnlyList<Product>> GetLimitedAsync(int count);
+
     /// <summary>
     /// 指定されたIDの商品を取得する。
     /// </summary>
