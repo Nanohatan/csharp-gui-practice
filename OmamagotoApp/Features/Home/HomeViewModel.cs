@@ -5,6 +5,7 @@ using OmamagotoApp.Services.Navigation;
 
 using CommunityToolkit.Mvvm.Input;
 using OmamagotoApp.Features.Products;
+using OmamagotoApp.Features.Store;
 
 namespace OmamagotoApp.Features.Home;
 
@@ -21,5 +22,11 @@ public partial class HomeViewModel : PageViewModel
     private Task GoToProductEditPageAsync()
     {
         return NavigateToAsync(ProductRoutes.Edit);
+    }
+
+    [RelayCommand]
+    private Task GoToStoreFrontPageAsync()
+    {
+        return NavigateToAsync(StoreRoutes.Front);
     }
 }

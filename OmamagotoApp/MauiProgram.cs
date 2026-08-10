@@ -3,6 +3,7 @@
 using OmamagotoApp.Services.Dialogs;
 using OmamagotoApp.Features.Home;
 using OmamagotoApp.Features.Products;
+using OmamagotoApp.Features.Store;
 using OmamagotoApp.Services.Errors;
 using OmamagotoApp.Services.Navigation;
 using OmamagotoApp.Services.Database;
@@ -40,7 +41,8 @@ public static class MauiProgram
 
         builder.Services
             .AddHomeFeature()
-            .AddProductFeature();
+            .AddProductFeature()
+            .AddStoreFeature();
 
 
 
