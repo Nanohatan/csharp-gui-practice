@@ -20,6 +20,10 @@ public sealed class ProductService : IProductService
 
         return await db.InsertAsync(product);
     }
+    /// <summary>
+    /// Retrieves all products ordered by creation time, from newest to oldest.
+    /// </summary>
+    /// <returns>The products ordered by descending creation time.</returns>
     public async Task<IReadOnlyList<Product>> GetAllAsync()
     {
         var db = await _databaseService.GetConnectionAsync();
@@ -28,6 +32,11 @@ public sealed class ProductService : IProductService
             .OrderByDescending(product => product.CreatedAt)
             .ToListAsync();
     }
+    /// <summary>
+    /// Retrieves the most recently created products up to the specified count.
+    /// </summary>
+    /// <param name="count">The maximum number of products to retrieve.</param>
+    /// <returns>The products ordered by descending creation time.</returns>
     public async Task<IReadOnlyList<Product>> GetLimitedAsync(int count)
     {
         var db = await _databaseService.GetConnectionAsync();
@@ -38,6 +47,11 @@ public sealed class ProductService : IProductService
             .ToListAsync();
     }
 
+    /// <summary>
+    /// Retrieves a product by its identifier.
+    /// </summary>
+    /// <param name="id">The identifier of the product to retrieve.</param>
+    /// <returns>The matching product, or <c>null</c> if no product has the specified identifier.</returns>
     public async Task<Product?> GetByIdAsync(int id)
     {
         var db = await _databaseService.GetConnectionAsync();
