@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 
 using OmamagotoApp.Services.Dialogs;
 using OmamagotoApp.Features.Home;
@@ -12,6 +12,10 @@ namespace OmamagotoApp;
 
 public static class MauiProgram
 {
+    /// <summary>
+    /// Creates and configures the MAUI application.
+    /// </summary>
+    /// <returns>The configured MAUI application.</returns>
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();

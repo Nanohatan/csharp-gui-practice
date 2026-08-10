@@ -1,4 +1,3 @@
-
 using OmamagotoApp.Services.Dialogs;
 using OmamagotoApp.Features.ViewModels;
 using OmamagotoApp.Services.Navigation;
@@ -18,6 +17,12 @@ public partial class StoreFrontViewModel : PageViewModel
 
     public ObservableCollection<Product> Products { get; } = new();
 
+    /// <summary>
+    /// Initializes a store front view model with the services required for product retrieval, navigation, and dialogs.
+    /// </summary>
+    /// <param name="dialogService">The service used to display dialogs.</param>
+    /// <param name="navigationService">The service used for page navigation.</param>
+    /// <param name="productService">The service used to retrieve products.</param>
     public StoreFrontViewModel(
         IDialogService dialogService,
         INavigationService navigationService,
@@ -27,6 +32,9 @@ public partial class StoreFrontViewModel : PageViewModel
         _productService = productService;
     }
 
+    /// <summary>
+    /// Loads up to five products into the product collection.
+    /// </summary>
     public async Task LoadAsync()
     {
         var products = await _productService.GetLimitedAsync(5);
