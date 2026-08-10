@@ -118,6 +118,7 @@
                 Text="🛒  注文をはじめる"
                 BackgroundColor="{StaticResource PrimaryBlue}"
                 TextColor="{StaticResource DarkText}"
+                Command="{Binding GoToStoreFrontPageCommand}"
                 SemanticProperties.Hint="注文を始める画面へ移動します" />
 
             <!-- 補助機能 -->

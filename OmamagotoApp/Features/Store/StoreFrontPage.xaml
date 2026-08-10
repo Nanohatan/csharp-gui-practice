@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="OmamagotoApp.Features.Store.StoreFrontPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:OmamagotoApp.Features.Products.Models"
+    xmlns:viewModels="clr-namespace:OmamagotoApp.Features.Store"
+    x:DataType="viewModels:StoreFrontViewModel"
+    Title="ホーム"
+    BackgroundColor="{StaticResource PageBackground}">
+
+<CollectionView
+    ItemsSource="{Binding Products}"
+    SelectionMode="None"
+    Margin="20">
+
+    <CollectionView.Header>
+        <VerticalStackLayout
+            Spacing="6"
+            Margin="0,0,0,20">
+
+            <Label
+                Text="🛒 しょうひんいちらん"
+                FontSize="30"
+                FontAttributes="Bold"
+                TextColor="{StaticResource BrownText}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+        </VerticalStackLayout>
+    </CollectionView.Header>
+
+    <CollectionView.ItemsLayout>
+        <GridItemsLayout
+            Orientation="Vertical"
+            Span="2"
+            HorizontalItemSpacing="14"
+            VerticalItemSpacing="18" />
+    </CollectionView.ItemsLayout>
+
+    <CollectionView.ItemTemplate>
+        <DataTemplate x:DataType="models:Product">
+            <Border
+                BackgroundColor="{StaticResource CardBackground}"
+                Stroke="{StaticResource CardBorder}"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 22"
+                Padding="0">
+
+                <VerticalStackLayout Spacing="0">
+
+                    <Grid
+                        HeightRequest="170"
+                        BackgroundColor="{StaticResource PageBackground}">
+
+                        <Image
+                            Source="{Binding ImageSource}"
+                            Aspect="AspectFill"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill" />
+
+                    </Grid>
+
+                    <VerticalStackLayout
+                        Padding="14"
+                        Spacing="8">
+
+                        <Label
+                            Text="{Binding Name}"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource BrownText}"
+                            LineBreakMode="TailTruncation"
+                            MaxLines="2" />
+
+                        <HorizontalStackLayout Spacing="4">
+
+                            <Label
+                                Text="{Binding Price}"
+                                FontSize="22"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource BrownText}" />
+
+                            <Label
+                                Text="えん"
+                                FontSize="15"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource DarkText}"
+                                VerticalOptions="End"
+                                Margin="0,0,0,2" />
+
+                        </HorizontalStackLayout>
+
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+
+            </Border>
+        </DataTemplate>
+    </CollectionView.ItemTemplate>
+
+</CollectionView>
+
+</ContentPage>

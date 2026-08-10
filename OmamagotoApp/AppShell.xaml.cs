@@ -1,4 +1,5 @@
 ﻿using OmamagotoApp.Features.Products;
+using OmamagotoApp.Features.Store;
 
 namespace OmamagotoApp;
 
@@ -8,5 +9,6 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
         ProductRouteRegistration.RegistrationProductRoutes();
+        StoreRoutesRegistration.RegistrationStoreRoutes();
     }
 }
