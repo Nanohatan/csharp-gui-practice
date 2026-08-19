@@ -6,7 +6,9 @@ on:
   push:
     branches:
       - main
-
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 env:
   BUNDLE_ID: com.companyname.omamagotoapp
   APPIUM_HOST: http://127.0.0.1:4723/

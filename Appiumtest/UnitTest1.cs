@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 
@@ -42,16 +43,50 @@ public class Tests
     }
 
     [Test]
-    public void ProductEditButton_CanClick()
+    public void Home_ToProductEdit_NavigatesSuccessfully()
     {
-        var button = _driver.FindElement(
-            MobileBy.AccessibilityId("Home_ProductEditButton")
-        );
+        var button = FindDisplayedElement("Home_ProductEditButton");
 
-        Assert.That(button.Displayed, Is.True);
         Assert.That(button.Enabled, Is.True);
-
         button.Click();
+
+        var productNameEntry = FindDisplayedElement("ProductNameEntry");
+
+        Assert.That(productNameEntry.Displayed, Is.True);
+    }
+
+    private AppiumElement FindDisplayedElement(
+        string accessibilityId,
+        int timeoutSeconds = 10)
+    {
+        var timeoutAt = DateTime.UtcNow.AddSeconds(timeoutSeconds);
+        WebDriverException? lastException = null;
+
+        do
+        {
+            try
+            {
+                var element = _driver.FindElement(
+                    MobileBy.AccessibilityId(accessibilityId));
+
+                if (element.Displayed)
+                {
+                    return element;
+                }
+            }
+            catch (WebDriverException ex)
+            {
+                lastException = ex;
+            }
+
+            Thread.Sleep(200);
+        }
+        while (DateTime.UtcNow < timeoutAt);
+
+        throw new AssertionException(
+            $"AccessibilityId '{accessibilityId}' was not displayed " +
+            $"within {timeoutSeconds} seconds.",
+            lastException);
     }
 
     [OneTimeTearDown]
