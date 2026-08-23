@@ -34,6 +34,9 @@ public class Tests
         options.AddAdditionalAppiumOption("udid", udid);
         options.AddAdditionalAppiumOption("bundleId", bundleId);
 
+        // WDA の xcodebuild ログを Appium log に出す
+        options.AddAdditionalAppiumOption("showXcodeLog", true);
+
         _driver = new IOSDriver(
             new Uri(appiumHost),
             options,
