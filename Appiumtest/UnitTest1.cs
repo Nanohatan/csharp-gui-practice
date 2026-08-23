@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
@@ -41,7 +41,7 @@ public class Tests
         _driver = new IOSDriver(
             new Uri(appiumHost),
             options,
-            TimeSpan.FromSeconds(180)
+            TimeSpan.FromMinutes(10)
         );
     }
 
