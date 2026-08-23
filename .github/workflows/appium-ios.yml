@@ -155,6 +155,7 @@ jobs:
           npx appium \
             --address 127.0.0.1 \
             --port 4723 \
+            --log-level debug \
             > appium.log 2>&1 &
 
           echo $! > appium.pid
