@@ -145,6 +145,33 @@ jobs:
             "${{ steps.simulator.outputs.udid }}" \
             "${{ steps.app.outputs.path }}"
 
+      - name: Prepare WebDriverAgent
+        id: wda
+        working-directory: Appiumtest
+        shell: bash
+        run: |
+          WDA_DIR="$RUNNER_TEMP/appium-wda"
+
+          npx appium driver run xcuitest download-wda -- \
+            --outdir="$WDA_DIR" \
+            --platform=ios \
+            --kind=sim
+
+          WDA_PATH=$(find "$WDA_DIR" \
+            -type d \
+            -name "WebDriverAgentRunner-Runner.app" \
+            -print \
+            -quit)
+
+          if [ -z "$WDA_PATH" ]; then
+            echo "Downloaded WebDriverAgent app was not found."
+            find "$WDA_DIR" -maxdepth 3 -print
+            exit 1
+          fi
+
+          echo "WDA_PATH=$WDA_PATH"
+          echo "path=$WDA_PATH" >> "$GITHUB_OUTPUT"
+
       # ----------------------------
       # Appium 起動
       # ----------------------------
@@ -184,6 +211,7 @@ jobs:
         env:
           DEVICE_NAME: ${{ steps.simulator.outputs.device_name }}
           UDID: ${{ steps.simulator.outputs.udid }}
+          WDA_PATH: ${{ steps.wda.outputs.path }}
 
           # 上の job env がそのまま使われる
           # BUNDLE_ID
@@ -193,6 +221,7 @@ jobs:
           echo "UDID=$UDID"
           echo "BUNDLE_ID=$BUNDLE_ID"
           echo "APPIUM_HOST=$APPIUM_HOST"
+          echo "WDA_PATH=$WDA_PATH"
 
           dotnet test appiumtest.csproj \
             -c Debug \

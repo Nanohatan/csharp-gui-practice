@@ -38,6 +38,15 @@ public class Tests
         // WDA の xcodebuild ログを Appium log に出す
         options.AddAdditionalAppiumOption("showXcodeLog", true);
 
+        // CI では Simulator 用のビルド済み WDA を使い、セッション開始時の
+        // xcodebuild と 127.0.0.1:8100 の起動競合を避ける。
+        var wdaPath = Environment.GetEnvironmentVariable("WDA_PATH");
+        if (!string.IsNullOrWhiteSpace(wdaPath))
+        {
+            options.AddAdditionalAppiumOption("usePreinstalledWDA", true);
+            options.AddAdditionalAppiumOption("prebuiltWDAPath", wdaPath);
+        }
+
         _driver = new IOSDriver(
             new Uri(appiumHost),
             options,
