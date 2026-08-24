@@ -17,10 +17,18 @@ public interface IProductService
     /// <summary>
     /// 登録されているすべての商品を取得する。
     /// </summary>
-    /// <returns>商品の読み取り専用一覧。</returns>
+    /// <summary>
+/// Retrieves all products.
+/// </summary>
+/// <returns>A read-only list of products.</returns>
     Task<IReadOnlyList<Product>> GetAllAsync();
 
-    Task<IReadOnlyList<Product>> GetLimitedAsync(int count);
+    /// <summary>
+/// Retrieves a limited list of products.
+/// </summary>
+/// <param name="count">The maximum number of products to retrieve.</param>
+/// <returns>The products retrieved, up to the specified count.</returns>
+Task<IReadOnlyList<Product>> GetLimitedAsync(int count);
 
     /// <summary>
     /// 指定されたIDの商品を取得する。

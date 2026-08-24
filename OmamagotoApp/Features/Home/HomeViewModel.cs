@@ -1,4 +1,3 @@
-
 using OmamagotoApp.Services.Dialogs;
 using OmamagotoApp.Features.ViewModels;
 using OmamagotoApp.Services.Navigation;
@@ -18,12 +17,18 @@ public partial class HomeViewModel : PageViewModel
     {
     }
 
+    /// <summary>
+    /// Navigates to the product edit page.
+    /// </summary>
     [RelayCommand]
     private Task GoToProductEditPageAsync()
     {
         return NavigateToAsync(ProductRoutes.Edit);
     }
 
+    /// <summary>
+    /// Navigates to the store front page.
+    /// </summary>
     [RelayCommand]
     private Task GoToStoreFrontPageAsync()
     {
